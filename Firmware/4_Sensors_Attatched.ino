@@ -22,7 +22,7 @@ void loop(){
   sensorRead('b');
   sensorRead('l');
   sensorRead('r');
-  delay(100);	//delay between sensor reads for stability.
+  delay(100);	//delay between sensor reads for stability (Can be reduced if it interferes with stratagy).
 }
 
 
