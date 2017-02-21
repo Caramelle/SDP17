@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/production/SDP17/visionstrategy/libs/v4l4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/SDP17/visionstrategy/libs/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/SDP17/visionstrategy/libs/jssc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
