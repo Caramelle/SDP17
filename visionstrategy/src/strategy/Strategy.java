@@ -70,6 +70,7 @@ public class Strategy implements VisionListener, PortListener, ActionListener {
 
 
 //        fred.PROPELLER_CONTROLLER.setActive(false);
+//        Dabal is awesome!!
 
         this.action = "";
         GUI.gui.doesNothingButIsNecessarySoDontDelete();
