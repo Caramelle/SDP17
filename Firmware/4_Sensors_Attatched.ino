@@ -87,37 +87,73 @@ void sensorRead(char direction)
     switch(direction)
     {
      case 'f':
-     #define ultraSonicSensor A3
-     #define trigPin 3
-     break;
+     
+     
+      // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+      // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+      pinMode(9,OUTPUT);
+      digitalWrite(9, LOW);
+      delayMicroseconds(2);
+      digitalWrite(9,HIGH);
+      delayMicroseconds(10);
+      digitalWrite(9,LOW);
+    
+    
+      pinMode(A1,INPUT);
+      duration=pulseIn(A1,HIGH);
+    
+      break;
      
      case 'b':
-     #define ultraSonicSensor A2
-     #define trigPin 5
+      // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+      // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+      pinMode(5,OUTPUT);
+      digitalWrite(5, LOW);
+      delayMicroseconds(2);
+      digitalWrite(5,HIGH);
+      delayMicroseconds(10);
+      digitalWrite(5,LOW);
+    
+    
+      pinMode(A2,INPUT);
+      duration=pulseIn(A2,HIGH);
      break;
      
 
      case 'l':
-     #define ultraSonicSensor A1
-     #define trigPin 9
+      // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+      // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+      pinMode(3,OUTPUT);
+      digitalWrite(3, LOW);
+      delayMicroseconds(2);
+      digitalWrite(3,HIGH);
+      delayMicroseconds(10);
+      digitalWrite(3,LOW);
+    
+    
+      pinMode(A3,INPUT);
+      duration=pulseIn(A3,HIGH);
+     
+     
      break;
    
      case 'r':
-     #define ultraSonicSensor A0
-     #define trigPin 6
+      // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
+      // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+      pinMode(6,OUTPUT);
+      digitalWrite(6, LOW);
+      delayMicroseconds(2);
+      digitalWrite(6,HIGH);
+      delayMicroseconds(10);
+      digitalWrite(6,LOW);
+    
+    
+      pinMode(A0,INPUT);
+      duration=pulseIn(A0,HIGH);
      break;
     }
-    // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
-    // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-    pinMode(trigPin,OUTPUT);
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin,HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin,LOW);
+   
   
-    pinMode(ultraSonicSensor,INPUT);
-    duration=pulseIn(ultraSonicSensor,HIGH);
   
      distance_cm = microsecondsToCentimeters(duration);
     
