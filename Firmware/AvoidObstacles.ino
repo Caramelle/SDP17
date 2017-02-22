@@ -196,7 +196,7 @@ else
    motorControl(LEFT,0);
 
 }
-
+}
 
 long microsecondsToCentimeters(long microseconds)
 {
