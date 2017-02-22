@@ -100,7 +100,7 @@ void setup(){
 //#################################################################################################################################################################
 
 //Returns the distance sensed in the given direction (in centimeters).
-void sensorRead(char direction)
+long sensorRead(char direction)
 {
   
     long duration,distance_cm;
