@@ -12,6 +12,8 @@ import vision.RobotType;
 public class BallPoint extends DynamicPointBase {
 
 
+
+
     @Override
     public void recalculate() {
         Ball ball = Strategy.world.getBall();

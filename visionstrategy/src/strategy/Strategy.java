@@ -118,7 +118,7 @@ public class Strategy implements VisionListener, PortListener, ActionListener {
                 case "kick":
                     fred.ACTION_CONTROLLER.setAction(new OffensiveKick(fred));
                     break;
-                case "kickp":
+                case "pk":
                     fred.ACTION_CONTROLLER.setAction(new OffensiveKickPrecise(fred));
                 case "h":
                     fred.ACTION_CONTROLLER.setAction(new Waiting(fred));
@@ -154,6 +154,10 @@ public class Strategy implements VisionListener, PortListener, ActionListener {
                     break;
                 case "demo":
                     fred.ACTION_CONTROLLER.setAction(new Demo(fred));
+                    break;
+                case "goToTest":
+                    fred.ACTION_CONTROLLER.setAction(new GotoTest(fred, new TestPoint()));
+                    System.out.println("TEST TEST TEST");
                     break;
                 case "def":
                     fred.ACTION_CONTROLLER.setAction(new DefendGoal(fred));

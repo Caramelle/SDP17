@@ -6,7 +6,8 @@ import vision.constants.Constants;
 /**
  * Created by Simon Rovder
  */
-public class EnemyGoal extends DynamicPointBase {
+public class
+EnemyGoal extends DynamicPointBase {
     @Override
     public void recalculate() {
 
