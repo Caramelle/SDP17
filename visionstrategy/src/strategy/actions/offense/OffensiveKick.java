@@ -29,9 +29,10 @@ public class OffensiveKick extends ActionBase {
         this.robot.MOTION_CONTROLLER.setDestination(behindBall);
         if(newState == 0){
             System.out.println("entered state 0");
+            Kicker kicker = new Kicker(this.robot);
             if(this.robot instanceof Fred){
                 //((Fred)this.robot).PROPELLER_CONTROLLER.setActive(true);
-                Kicker kicker = new Kicker(this.robot);
+
 
                 //kicker.kick(1);
                 System.out.println("entered kick");
@@ -43,17 +44,17 @@ public class OffensiveKick extends ActionBase {
                 System.out.println("coordinateLocation: x:" +us.location.x+" y:"+us.location.y);
 
                 if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
-                    ((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
+                    //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
                     //((Fred)this.robot).PROPELLER_CONTROLLER.propell(-1);
                     System.out.println("counter: " + counter);
-                    behindBall.recalculate();
+                    //behindBall.recalculate();
                     kicker.kick(1);
 
                     System.out.println("Close enough to kick and kick 1");
                     counter++;
                 }
-                kicker.kick(0);
-                System.out.println(" kick 0");
+//                kicker.kick(0);
+//                System.out.println(" kick 0");
 
 //                    try{
 //                        Thread.sleep(50);
@@ -73,6 +74,8 @@ public class OffensiveKick extends ActionBase {
 //                ((Fred)this.robot).PROPELLER_CONTROLLER.setActive(false);
             }
             System.out.println("exit kick ");
+            kicker.kick(0);
+            System.out.println(" kick 0");
         }
         System.out.println("exit state 0");
         this.state = 0;
