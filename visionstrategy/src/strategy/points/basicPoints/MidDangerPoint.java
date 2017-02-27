@@ -19,6 +19,9 @@ public class MidDangerPoint extends DynamicPointBase {
 
     private RobotType usType;
 
+    //True if the ball is moving slowly and is far from our goal.
+    private boolean betterAttack;
+
     public MidDangerPoint(RobotType robotType){
         this.usType = robotType;
     }
@@ -34,7 +37,10 @@ public class MidDangerPoint extends DynamicPointBase {
 
             if (WorldTools.isPointInFriendDefenceArea(dangerV)) {
                 base = VectorGeometry.vectorToClosestPointOnFiniteLine(new VectorGeometry(-Constants.PITCH_WIDTH / 2, 20), new VectorGeometry(-Constants.PITCH_WIDTH / 2, 20), dangerV);
+                betterAttack=false; //Ball moving slow ,but close to goal. -> May allow opponent to score in attempt to perform offensive kick.
+
             } else {
+                betterAttack=true; //Ball moving slow, and not in goal area.
                 base = new VectorGeometry(-Constants.PITCH_WIDTH / 2, 0);
             }
             VectorGeometry goal = base.minus(danger.getX(), danger.getY());
@@ -43,6 +49,7 @@ public class MidDangerPoint extends DynamicPointBase {
             this.x = (int) (goal.x);
             this.y = (int) (goal.y);
         } else {
+            betterAttack=false; //Ball moving fast.
             VectorGeometry v = VectorGeometry.closestPointToLine(b.location, b.velocity, us.location);
 //            VectorGeometry v = VectorGeometry.intersectionWithFiniteLine(b.location, b.velocity, new VectorGeometry(-Constants.PITCH_WIDTH/2, 30), new VectorGeometry(-Constants.PITCH_WIDTH/2, -30));
             this.x = (int) v.x;
@@ -50,6 +57,12 @@ public class MidDangerPoint extends DynamicPointBase {
         }
 
 
+    }
+
+    //True if the ball is moving slowly and is far from our goal.
+    public boolean betterAttack()
+    {
+        return betterAttack;
     }
 
     @Override

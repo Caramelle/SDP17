@@ -52,7 +52,7 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
         this.lastState = this.nextState;
         switch (this.nextState){
             case DEFEND:
-                this.enterAction(new DefendGoal(this.robot), 0, 0);
+                this.enterAction(new DefendGoal(this.robot), 0, 0); //Will kick the ball in goal direction if possible.
                 break;
             case KICK:
                 this.enterAction(new OffensiveKick(this.robot), 0, 0);

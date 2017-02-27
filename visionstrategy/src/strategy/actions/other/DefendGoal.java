@@ -2,6 +2,7 @@ package strategy.actions.other;
 
 import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
+import strategy.actions.offense.OffensiveKick;
 import strategy.points.basicPoints.DangerousPoint;
 import strategy.points.basicPoints.MidDangerPoint;
 import strategy.robots.Fred;
@@ -31,8 +32,18 @@ public class DefendGoal extends ActionBase {
     public void tok() throws ActionException {
         if(this.state == 0){
             robot.MOTION_CONTROLLER.setHeading(new DangerousPoint());
-            this.enterAction(new HoldPosition(this.robot, new MidDangerPoint(this.robot.robotType)), 0, 0);
+
+            MidDangerPoint midDangerPoint=new MidDangerPoint(this.robot.robotType);
+            //Attack in case the ball is moving slowly ,far from the goal area, in our own side of the pitch.
+            if(midDangerPoint.betterAttack())
+            {
+                this.enterAction(new OffensiveKick(this.robot), 0, 0);
+            }
+            else
+            {
+            this.enterAction(new HoldPosition(this.robot, midDangerPoint), 0, 0);
             this.enterState(1);
+            }
         }
     }
 }

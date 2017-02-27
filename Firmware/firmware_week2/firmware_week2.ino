@@ -67,9 +67,8 @@ void kicker(){
   int type = atoi(sCmd.next());
   if(type == 0){
     motorStop(KICKERS);
-  } else if (type == 1){
-    motorForward(KICKERS, 100);
-  } else {
+  }
+  else {
     motorBackward(KICKERS, 100);
   }
 }
@@ -79,13 +78,12 @@ void completeHalt(){
 }
 
 void setup(){
-  sCmd.addCommand("f", dontMove); 
-  sCmd.addCommand("h", completeHalt); 
-  sCmd.addCommand("motor", spinmotor); 
-  sCmd.addCommand("r", rationalMotors); 
-  sCmd.addCommand("ping", pingMethod); 
-  sCmd.addCommand("kick", kicker); 
+  sCmd.addCommand("f", dontMove);
+  sCmd.addCommand("h", completeHalt);
+  sCmd.addCommand("motor", spinmotor);
+  sCmd.addCommand("r", rationalMotors);
+  sCmd.addCommand("ping", pingMethod);
+  sCmd.addCommand("kick", kicker);
   SDPsetup();
   helloWorld();
 }
-

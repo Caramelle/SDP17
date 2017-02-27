@@ -20,6 +20,9 @@ public class HoldPosition extends ActionBase {
 
     @Override
     public void tok() throws ActionException {
+
+
+
         this.robot.MOTION_CONTROLLER.setDestination(this.point);
         this.robot.MOTION_CONTROLLER.setTolerance(-1);
     }
