@@ -96,6 +96,14 @@ public class NewRobotAnalysis extends RobotAnalysisBase {
                 world.robotChangeDelay = lastKnownWorld.robotChangeDelay - 1;
             } else {
                 world.robotChangeDelay = 20;
+                //if there's less robots now than in the last known world
+                for(Robot robot : lastKnownWorld.getRobots())
+                {
+                    //if a robot is no longer on the pitch but it was there previously
+                    if(world.getRobot(robot.alias) == null)
+                        world.setRobot(robot);
+                }
+
             }
         } else {
             if(this.lastKnownWorld != null){

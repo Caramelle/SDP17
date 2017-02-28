@@ -34,8 +34,11 @@ public class RobotPoint extends DynamicPointBase{
         if(r != null){
             this.x = (int) r.location.x;
             this.y = (int) r.location.y;
-
         }
+//        else{
+//            this.x = (int) r.lastLocation.x;
+//            this.y = (int) r.lastLocation.y;
+//        }
     }
 
     @Override

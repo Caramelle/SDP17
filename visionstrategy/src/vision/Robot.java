@@ -7,6 +7,7 @@ import vision.tools.DirectedPoint;
  */
 public class Robot {
     public DirectedPoint location;
+    public DirectedPoint lastLocation;
     public DirectedPoint velocity;
     public RobotType type;
     public RobotAlias alias;
@@ -20,6 +21,7 @@ public class Robot {
     public Robot clone(){
         Robot r = new Robot();
         r.location = this.location.clone();
+        r.lastLocation = this.lastLocation.clone();
         r.velocity = this.velocity.clone();
         r.type = this.type;
         return r;

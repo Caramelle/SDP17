@@ -9,13 +9,13 @@ import vision.spotAnalysis.SpotAnalysisBase;
 import vision.spotAnalysis.approximatedSpotAnalysis.RegionFinder;
 import vision.spotAnalysis.approximatedSpotAnalysis.Spot;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-
-import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
+//import org.opencv.core.Core;
+//import org.opencv.core.CvType;
+//import org.opencv.core.Mat;
+//import org.opencv.core.Size;
+//
+//import org.opencv.highgui.Highgui;
+//import org.opencv.imgproc.Imgproc;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,48 +72,48 @@ public class RecursiveSpotAnalysis extends SpotAnalysisBase{
         }
     }
 
-    public static BufferedImage mat2Img(Mat mat)
-    {
-        byte[] data = new byte[mat.rows()*mat.cols()*(int)(mat.elemSize())];
-        mat.get(0, 0, data);
-        if (mat.channels() == 3) {
-            for (int i = 0; i < data.length; i += 3) {
-                byte temp = data[i];
-                data[i] = data[i + 2];
-                data[i + 2] = temp;
-            }
-        }
-        BufferedImage image = new BufferedImage(mat.cols(), mat.rows(), BufferedImage.TYPE_3BYTE_BGR);
-        image.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), data);
-
-        return image;
-    }
-
-    public static Mat img2Mat(BufferedImage image)
-    {
-        byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
-        Mat mat = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
-        mat.put(0, 0, data);
-
-        return mat;
-    }
-
-    public Mat blurFrame(BufferedImage image){
-
-        //System.setProperty("java.library.path", "/afs/inf.ed.ac.uk/user/s14/s1408218/sdp/sdp/libs");
-        //System.out.println(System.getProperty("java.library.path"));
-
-
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat source = img2Mat(image);
-        // Mat source = Highgui.imread("afs/inf.ed.ac.uk/user/s14/s1408218/Desktop/digital_image_processing.jpg",  Highgui.CV_LOAD_IMAGE_COLOR);
-        Mat destination = new Mat(source.rows(), source.cols(), source.type());
-        Imgproc.GaussianBlur(source, destination, new Size(11, 11), 0);
-        //Highgui.imwrite("Gaussian45.jpg", destination);
-        //BufferedImage result = mat2Img(destination);
-        return destination;
-
-    }
+//    public static BufferedImage mat2Img(Mat mat)
+//    {
+//        byte[] data = new byte[mat.rows()*mat.cols()*(int)(mat.elemSize())];
+//        mat.get(0, 0, data);
+//        if (mat.channels() == 3) {
+//            for (int i = 0; i < data.length; i += 3) {
+//                byte temp = data[i];
+//                data[i] = data[i + 2];
+//                data[i + 2] = temp;
+//            }
+//        }
+//        BufferedImage image = new BufferedImage(mat.cols(), mat.rows(), BufferedImage.TYPE_3BYTE_BGR);
+//        image.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), data);
+//
+//        return image;
+//    }
+//
+//    public static Mat img2Mat(BufferedImage image)
+//    {
+//        byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+//        Mat mat = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
+//        mat.put(0, 0, data);
+//
+//        return mat;
+//    }
+//
+//    public Mat blurFrame(BufferedImage image){
+//
+//        //System.setProperty("java.library.path", "/afs/inf.ed.ac.uk/user/s14/s1408218/sdp/sdp/libs");
+//        //System.out.println(System.getProperty("java.library.path"));
+//
+//
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//        Mat source = img2Mat(image);
+//        // Mat source = Highgui.imread("afs/inf.ed.ac.uk/user/s14/s1408218/Desktop/digital_image_processing.jpg",  Highgui.CV_LOAD_IMAGE_COLOR);
+//        Mat destination = new Mat(source.rows(), source.cols(), source.type());
+//        Imgproc.GaussianBlur(source, destination, new Size(11, 11), 0);
+//        //Highgui.imwrite("Gaussian45.jpg", destination);
+//        //BufferedImage result = mat2Img(destination);
+//        return destination;
+//
+//    }
 
 
 
@@ -121,9 +121,9 @@ public class RecursiveSpotAnalysis extends SpotAnalysisBase{
     @Override
     public void nextFrame(BufferedImage image, long time) {
 
-        Mat blurredImage = blurFrame(image);
-        BufferedImage img = mat2Img(blurredImage);
-        Raster raster = img.getData();
+//        Mat blurredImage = blurFrame(image);
+//        BufferedImage img = mat2Img(blurredImage);
+        Raster raster = image.getData();
 
         /*
          * SDP2017NOTE

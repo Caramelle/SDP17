@@ -30,7 +30,6 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
 
     public static boolean RESET = true;
 
-
     public Behave(RobotBase robot){
         super(robot, null);
     }
@@ -74,13 +73,15 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
         } else {
             Robot us = Strategy.world.getRobot(this.robot.robotType);
             if(us == null){
-                // TODO: Angry yelling
-            } else {
-                VectorGeometry ourGoal = new VectorGeometry(-Constants.PITCH_WIDTH/2, 0);
-                if(us.location.distance(ourGoal) > ball.location.distance(ourGoal)){
+              // this.nextState =
+
+            }else {
+                //   us.lastLocation = us.location;
+                VectorGeometry ourGoal = new VectorGeometry(-Constants.PITCH_WIDTH / 2, 0);
+                if (us.location.distance(ourGoal) > ball.location.distance(ourGoal)) {
                     this.nextState = BehaviourEnum.SAFE;
                 } else {
-                    if(Math.abs(ball.location.x) > Constants.PITCH_WIDTH/2 - 20 && Math.abs(ball.location.y) > Constants.PITCH_HEIGHT/2 - 20){
+                    if (Math.abs(ball.location.x) > Constants.PITCH_WIDTH / 2 - 20 && Math.abs(ball.location.y) > Constants.PITCH_HEIGHT / 2 - 20) {
                         this.nextState = BehaviourEnum.SHUNT;
                     } else {
                         boolean canKick = true;
@@ -89,7 +90,7 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
 //                            if(r != null && r.velocity.length() < 1) canKick = canKick && r.location.distance(ball.location) > 50;
 //                        }
                         //canKick = canKick && !WorldTools.isPointInEnemyDefenceArea(ball.location);
-                        if(canKick && (this.lastState != BehaviourEnum.DEFEND || VectorGeometry.angle(ball.velocity, VectorGeometry.fromTo(ball.location, new VectorGeometry(-Constants.PITCH_WIDTH/2, 0))) > 2)){
+                        if (canKick && (this.lastState != BehaviourEnum.DEFEND || VectorGeometry.angle(ball.velocity, VectorGeometry.fromTo(ball.location, new VectorGeometry(-Constants.PITCH_WIDTH / 2, 0))) > 2)) {
                             this.nextState = BehaviourEnum.KICK;
                         } else {
                             this.nextState = BehaviourEnum.DEFEND;
