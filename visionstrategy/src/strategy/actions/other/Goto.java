@@ -4,6 +4,7 @@ import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
 import strategy.points.DynamicPoint;
 import strategy.Strategy;
+import strategy.points.basicPoints.EnemyGoal;
 import strategy.robots.RobotBase;
 import vision.Robot;
 import vision.RobotType;
@@ -22,7 +23,7 @@ public class Goto extends ActionBase {
     public void enterState(int newState) {
         if(newState == 1){
             this.robot.MOTION_CONTROLLER.setDestination(this.point);
-            this.robot.MOTION_CONTROLLER.setHeading(this.point);
+            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
         } else {
             this.robot.MOTION_CONTROLLER.setDestination(null);
             this.robot.MOTION_CONTROLLER.setHeading(null);
