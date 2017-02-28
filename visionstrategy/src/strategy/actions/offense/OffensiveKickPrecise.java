@@ -22,7 +22,7 @@ public class OffensiveKickPrecise extends ActionBase {
     public void enterState(int newState) {
         // Head to kick point
         if (this.state == 0) {
-            this.enterAction(new Goto(this.robot, new KickPoint()), 0, 0);
+            this.enterAction(new GotoAvoidBall(this.robot, new KickPoint()), 0, 0);
         }
 
         this.robot.MOTION_CONTROLLER.setHeading(new BallPoint());

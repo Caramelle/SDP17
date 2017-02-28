@@ -3,6 +3,7 @@ package strategy.actions;
 import strategy.GUI;
 import strategy.Strategy;
 import strategy.WorldTools;
+import strategy.actions.offense.OffensiveKickPrecise;
 import strategy.actions.other.DefendGoal;
 import strategy.actions.other.GoToSafeLocation;
 import strategy.actions.offense.OffensiveKick;
@@ -19,7 +20,7 @@ import vision.tools.VectorGeometry;
  * Created by Simon Rovder
  */
 enum BehaviourEnum{
-    DEFEND, SHUNT, KICK, SAFE, EMPTY
+    DEFEND, SHUNT, KICK, SAFE, EMPTY, OFFENCE
 }
 
 /**
@@ -48,20 +49,38 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
     public void tok() throws ActionException {
 
         this.robot.MOTION_CONTROLLER.clearObstacles();
-        if(this.robot instanceof Fred) ((Fred)this.robot).PROPELLER_CONTROLLER.setActive(true);
+//        if(this.robot instanceof Fred) {
+//            ((Fred)this.robot).PROPELLER_CONTROLLER.setActive(true);
+//            System.out.println("kicked in behave");
+//        }
         this.lastState = this.nextState;
         switch (this.nextState){
             case DEFEND:
                 this.enterAction(new DefendGoal(this.robot), 0, 0);
+                //Turn off the kicker.
+                System.out.println("Choose to defend");
+                //((Fred)this.robot).PROPELLER_CONTROLLER.propell(0);
                 break;
-            case KICK:
+            case OFFENCE:
+                System.out.println("Choose to kick");
                 this.enterAction(new OffensiveKick(this.robot), 0, 0);
+                //May choose to kick if close enough to the ball.
                 break;
             case SHUNT:
                 this.enterAction(new ShuntKick(this.robot), 0, 0);
+                System.out.println("Choose to shunt");
+                //Turn off the kicker.
+                //((Fred)this.robot).PROPELLER_CONTROLLER.propell(0);
                 break;
             case SAFE:
                 this.enterAction(new GoToSafeLocation(this.robot), 0, 0);
+                System.out.println("Choose to be safe");
+                //Turn off the kicker.
+                //((Fred)this.robot).PROPELLER_CONTROLLER.propell(0);
+                break;
+            case KICK:
+                System.out.println("Choose to kick");
+                this.enterAction(new OffensiveKick(this.robot),0,0);
                 break;
         }
     }
@@ -69,6 +88,7 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
     @Override
     protected BehaviourEnum getState() {
         Ball ball = Strategy.world.getBall();
+        boolean canKick = false;
         if(ball == null){
             this.nextState = BehaviourEnum.DEFEND;
         } else {
@@ -83,14 +103,20 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
                     if(Math.abs(ball.location.x) > Constants.PITCH_WIDTH/2 - 20 && Math.abs(ball.location.y) > Constants.PITCH_HEIGHT/2 - 20){
                         this.nextState = BehaviourEnum.SHUNT;
                     } else {
-                        boolean canKick = true;
+
+
 //                        for(Robot r : Strategy.world.getRobots()){
 //                            //if(r != null && r.type != RobotType.FRIEND_2 && r.velocity.length() < 1) canKick = canKick && r.location.distance(ball.location) > 50;
 //                            if(r != null && r.velocity.length() < 1) canKick = canKick && r.location.distance(ball.location) > 50;
 //                        }
                         //canKick = canKick && !WorldTools.isPointInEnemyDefenceArea(ball.location);
-                        if(canKick && (this.lastState != BehaviourEnum.DEFEND || VectorGeometry.angle(ball.velocity, VectorGeometry.fromTo(ball.location, new VectorGeometry(-Constants.PITCH_WIDTH/2, 0))) > 2)){
-                            this.nextState = BehaviourEnum.KICK;
+                        if((this.lastState != BehaviourEnum.DEFEND || VectorGeometry.angle(ball.velocity, VectorGeometry.fromTo(ball.location, new VectorGeometry(-Constants.PITCH_WIDTH/2, 0))) > 2)){
+                            this.nextState = BehaviourEnum.OFFENCE;
+                            if(VectorGeometry.distance(ball.location.x, ball.location.y, us.location.x, us.location.y) < 10) {
+                                this.nextState = BehaviourEnum.KICK;
+                            }
+
+
                         } else {
                             this.nextState = BehaviourEnum.DEFEND;
                         }
