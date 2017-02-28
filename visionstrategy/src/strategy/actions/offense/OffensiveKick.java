@@ -17,16 +17,40 @@ import vision.tools.VectorGeometry;
  */
 public class OffensiveKick extends ActionBase {
 
+   // public BehindBallPoint behindBall = new BehindBallPoint();
+    //public Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
+
+
     public OffensiveKick(RobotBase robot) {
         super(robot);
         this.rawDescription = "OffensiveKick";
         this.point= new BehindBallPoint();
     }
+
+    public boolean cankick (BehindBallPoint behindBall, Robot us){
+
+        if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 25){
+            return true;
+        }
+        else{
+              return false;
+        }
+
+
+    }
+
     @Override
     public void enterState(int newState) {
         BehindBallPoint behindBall = new BehindBallPoint();
+        Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
+        Kicker kicker = new Kicker(this.robot);
+
+
         this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
         this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+
+
+       /*
         if(newState == 0){
             System.out.println("entered state 0");
             if(this.robot instanceof Fred){
@@ -74,6 +98,25 @@ public class OffensiveKick extends ActionBase {
             }
             System.out.println("exit kick ");
         }
+
+        */
+
+
+
+
+        if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10){
+
+            kicker.kick(1);
+            System.out.println("kicker.kick");
+        }
+        else {
+            kicker.kick(0);
+            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
+        }
+
+
+
+
         System.out.println("exit state 0");
         this.state = 0;
     }
@@ -81,6 +124,30 @@ public class OffensiveKick extends ActionBase {
     @Override
     public void tok() throws ActionException {
 
+       //sumits debugger
+
+       /* if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
+            System.out.println("in tok offensive kick");
+            //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
+
+
+        }*/
+/*
+        System.out.println("in tok offensive kick");
+      if(cankick(behindBall, us)){
+          ((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
+          System.out.println("in tok offensive can kick");
+          System.out.println(us.location.x);
+      }
+      else {
+          ((Fred) this.robot).PROPELLER_CONTROLLER.setActive(false);
+          System.out.println("in tok offensive can NOOOOOOOOOOOOOOOOOOOT kick");
+          System.out.println(us.location.x  + "   "+ us.location.y);
+      }*/
+
+        //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
+
+     this.enterState(0);
 
     }
 }

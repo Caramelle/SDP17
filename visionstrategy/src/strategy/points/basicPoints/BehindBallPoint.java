@@ -22,7 +22,20 @@ public class BehindBallPoint extends DynamicPointBase {
         Ball ball = Strategy.world.getBall();
         if(ball != null){
             this.x = (int)ball.location.x-15;
-            this.y = (int)ball.location.y;
+//            if ((int)ball.location.y ==0 ) {
+//                this.y = (int)ball.location.y;
+//            } else if ((int)ball.location.y < 0 ) {
+//                this.y = (int)ball.location.y-10;
+//            } else {
+//                this.y = (int)ball.location.y-10;
+//            }
+            this.y = (int) (ball.location.y);
+//            if ((int)ball.location.y>=0){
+//                this.y = (int)ball.location.y+5;
+//            }
+//            else {
+//                this.y = (int)ball.location.y-5;
+//            }
         } else {
             RobotType probableHolder = Strategy.world.getProbableBallHolder();
             if(probableHolder != null){
