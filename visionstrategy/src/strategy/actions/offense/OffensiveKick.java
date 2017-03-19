@@ -4,12 +4,14 @@ import strategy.Strategy;
 import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
 import strategy.points.basicPoints.BallPoint;
+import strategy.points.basicPoints.BallPoint_inArea;
 import strategy.points.basicPoints.BehindBallPoint;
 import strategy.points.basicPoints.EnemyGoal;
 import strategy.robots.Fred;
 import strategy.robots.RobotBase;
 import vision.Robot;
 import vision.RobotType;
+import vision.constants.Constants;
 import vision.tools.VectorGeometry;
 
 /**
@@ -45,9 +47,35 @@ public class OffensiveKick extends ActionBase {
         Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
         Kicker kicker = new Kicker(this.robot);
 
+        BallPoint ballPoint = new BallPoint();
 
-        this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
-        this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+        if (VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 20) {
+            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+
+            if (us.location.x <= -Constants.PITCH_WIDTH / 4) {
+                this.robot.MOTION_CONTROLLER.setDestination(new BallPoint_inArea());
+                System.out.println("INside area");
+            } else {
+                this.robot.MOTION_CONTROLLER.setDestination(ballPoint);
+                System.out.println("outside area");
+            }
+            kicker.kick(1);
+            System.out.println("kicker.kick");
+
+        } else {
+            kicker.kick(0);
+            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
+            this.robot.MOTION_CONTROLLER.setHeading(behindBall);
+            this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+
+        }
+
+
+
+
+
+        //this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+        //this.robot.MOTION_CONTROLLER.setDestination(behindBall);
 
 
        /*
@@ -104,15 +132,7 @@ public class OffensiveKick extends ActionBase {
 
 
 
-        if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10){
 
-            kicker.kick(1);
-            System.out.println("kicker.kick");
-        }
-        else {
-            kicker.kick(0);
-            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
-        }
 
 
 

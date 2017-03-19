@@ -107,9 +107,9 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
                         if(canKick && (this.lastState != BehaviourEnum.DEFEND || VectorGeometry.angle(ball.velocity, VectorGeometry.fromTo(ball.location, new VectorGeometry(-Constants.PITCH_WIDTH/2, 0))) > 2)){
                             this.nextState = BehaviourEnum.KICK;
 
-                        } else {
+                        } /*else {
                             this.nextState = BehaviourEnum.DEFEND;
-                        }
+                        }*/
                     }
                 }
             }
