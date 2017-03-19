@@ -1,7 +1,5 @@
 package vision.robotAnalysis.newRobotAnalysis;
 
-import vision.Ball;
-import vision.Robot;
 import vision.spotAnalysis.approximatedSpotAnalysis.Spot;
 import vision.tools.VectorGeometry;
 

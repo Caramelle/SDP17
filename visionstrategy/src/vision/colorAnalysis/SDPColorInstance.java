@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.sun.beans.editors.ColorEditor;
-
 import vision.gui.Preview;
 import vision.gui.PreviewSelectionListener;
 import vision.settings.SaveLoadCapable;
@@ -43,6 +41,11 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 	private float maxBrightness = 1;
 	private float minBrightness = 1;
 
+	private float baseHue = 0;
+    private float baseSaturation = 0;
+    private float baseBrightness = 0;
+
+
 	private JSlider minHueSlider;
 	private JSlider maxHueSlider;
 	private JSlider minSaturationSlider;
@@ -62,6 +65,7 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 	
 	private boolean respondToSliderChange;
 	private boolean calibrating;
+	private boolean  isSet;
 	private JButton done;
 	private JButton calibrate;
     public Color referenceColor;
@@ -80,7 +84,10 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 				this.minBrightness <= v &&
 				this.maxBrightness >= v;
 	}
-	
+
+	public int maybeAddOne(float h){
+        return (this.maxHue > 1 && this.minHue > h? 1 : 0);
+    }
 	
 	
 	public SDPColorInstance(String name, Color referenceColor, SDPColor sdpColor){
@@ -90,6 +97,7 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 		this.referenceColor = referenceColor;
 		this.respondToSliderChange = true;
 		this.calibrating = false;
+		this.isSet = false;
 		this.sdpColor = sdpColor;
 		Preview.addSelectionListener(this);
 	}
@@ -320,12 +328,13 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 	@Override
 	public void previewClickHandler(ColoredPoint coloredPoint) {
 		if(this.calibrating && this.isVisible()){
+		    this.isSet = true;
 			float[] f = Color.RGBtoHSB(coloredPoint.color.getRed(), coloredPoint.color.getGreen(), coloredPoint.color.getBlue(), null);
-			this.maxHue        = (float) (f[0] + 0.05);
+			this.maxHue        = (float) (f[0] + 0.07);
 			if(this.maxHue > 1){
 				this.maxHue = this.maxHue - 1;
 			}
-			this.minHue        = (float) (f[0] - 0.05);
+			this.minHue        = (float) (f[0] - 0.07);
 			if(this.minHue < 0){
 				this.minHue = this.minHue + 1;
 			}
@@ -333,16 +342,55 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 				this.maxHue = this.maxHue + 1;
 			}
 			this.maxSaturation = 1;
-			this.minSaturation = (float) (f[1]-0.05);
+			this.minSaturation = (float) (f[1]-0.10);
 			this.maxBrightness = 1;
-			this.minBrightness = (float) (f[2]-0.05);
+			this.minBrightness = (float) (f[2]-0.10);
 			this.respondToSliderChange = false;
 			this.recalculateSliders();
 			this.respondToSliderChange = true;
 			this.refreshColors();
 			this.myRepaint();
+
+			this.baseHue = this.maxHue;
+			this.baseBrightness = this.minBrightness;
+			this.baseSaturation = this.minSaturation;
 		}
 	}
+
+    public void adjust(float[] f) {
+        this.isSet = true;
+        this.maxHue        = (float) (f[0] + 0.05);
+        if(this.maxHue > 1){
+            this.maxHue = this.maxHue - 1;
+        }
+        this.minHue        = (float) (f[0] - 0.05);
+        if(this.minHue < 0){
+            this.minHue = this.minHue + 1;
+        }
+        if(this.maxHue < this.minHue){
+            this.maxHue = this.maxHue + 1;
+        }
+        this.maxSaturation = 1;
+        this.minSaturation = (float) (f[1]-0.05);
+        this.maxBrightness = 1;
+        this.minBrightness = (float) (f[2]-0.05);
+        if(Math.abs(this.maxHue - this.baseHue) > 0.05) {
+            this.maxHue = this.baseHue;
+            this.minHue = this.baseHue;
+            this.minHue -= 0.10;
+            this.minSaturation = this.baseSaturation;
+            this.minBrightness = this.baseBrightness;
+        }
+        this.respondToSliderChange = false;
+        this.recalculateSliders();
+        this.respondToSliderChange = true;
+        this.refreshColors();
+        this.myRepaint();
+    }
+
+    public boolean isCalibrated(){
+	    return this.isSet;
+    }
 
 	@Override
 	public String saveSettings() {
@@ -378,6 +426,9 @@ public class SDPColorInstance extends JFrame implements ActionListener, ChangeLi
 			this.respondToSliderChange = true;
 			this.refreshColors();
 			this.myRepaint();
+			if(this.minHue != 0.0 && this.maxHue != 0.0){
+			    this.isSet = true;
+            }
 		}catch (Exception ex){
 			return;
 		}

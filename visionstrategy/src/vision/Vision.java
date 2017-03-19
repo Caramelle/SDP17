@@ -19,7 +19,6 @@ import vision.robotAnalysis.RobotPreview;
 import vision.robotAnalysis.DynamicWorldListener;
 import vision.robotAnalysis.RobotAnalysisBase;
 import vision.spotAnalysis.SpotAnalysisBase;
-import vision.spotAnalysis.approximatedSpotAnalysis.ApproximatedSpotAnalysis;
 import vision.spotAnalysis.recursiveSpotAnalysis.RecursiveSpotAnalysis;
 
 /**
@@ -52,7 +51,6 @@ public class Vision extends JFrame implements DynamicWorldListener {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		SpotAnalysisBase recursiveSpotAnalysis   = new RecursiveSpotAnalysis();
-		SpotAnalysisBase approximateSpotAnalysis = new ApproximatedSpotAnalysis();
 
 
 		// SDP2017NOTE

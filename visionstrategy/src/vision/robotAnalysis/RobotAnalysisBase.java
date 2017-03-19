@@ -2,7 +2,6 @@ package vision.robotAnalysis;
 
 import vision.DynamicWorld;
 import vision.distortion.DistortionListener;
-import vision.spotAnalysis.SpotAnalysisBase;
 
 import java.util.LinkedList;
 

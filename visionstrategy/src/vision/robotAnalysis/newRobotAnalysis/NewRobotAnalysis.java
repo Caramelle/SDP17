@@ -82,8 +82,10 @@ public class NewRobotAnalysis extends RobotAnalysisBase {
 
         if(spotList.size() > 0){
             ball = new Ball();
+            Spot sp = spotList.get(0);
             ball.location = spotList.get(0);
             world.setBall(ball);
+            sp.colorInstance.adjust(sp.avgHSV);
         }
         ball = world.getBall();
 

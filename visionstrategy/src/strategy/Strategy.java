@@ -116,7 +116,7 @@ public class Strategy implements VisionListener, PortListener, ActionListener {
                     fred.ACTION_CONTROLLER.setAction(new HoldPosition(fred, new MidFoePoint()));
                     break;
                 case "kick":
-                    fred.ACTION_CONTROLLER.setAction(new OffensiveKick(fred));
+                    fred.ACTION_CONTROLLER.setAction(new OffensiveKick(fred,new BehindBallPoint()));
                     break;
                 case "pk":
                     fred.ACTION_CONTROLLER.setAction(new OffensiveKickPrecise(fred));

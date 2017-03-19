@@ -21,7 +21,7 @@ public class BehindBallPoint extends DynamicPointBase {
     public void recalculate() {
         Ball ball = Strategy.world.getBall();
         if(ball != null){
-            this.x = (int)ball.location.x-15;
+            this.x = (int)ball.location.x-10;
 //            if ((int)ball.location.y ==0 ) {
 //                this.y = (int)ball.location.y;
 //            } else if ((int)ball.location.y < 0 ) {
@@ -29,7 +29,7 @@ public class BehindBallPoint extends DynamicPointBase {
 //            } else {
 //                this.y = (int)ball.location.y-10;
 //            }
-            this.y = (int) (ball.location.y);
+            this.y = (int) (ball.location.y*1.11);
 //            if ((int)ball.location.y>=0){
 //                this.y = (int)ball.location.y+5;
 //            }

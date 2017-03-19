@@ -3,6 +3,9 @@ package vision.colorAnalysis;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -27,9 +30,13 @@ public class ColorCalibration extends JPanel implements ActionListener{
 		btnCalibrate.setBounds(289, 10, 222, 33);
 		btnCalibrate.addActionListener(this);
 		this.add(btnCalibrate);
+		ArrayList<String> names = new ArrayList<>();
 		for(SDPColorInstance c : SDPColors.colors.values()){
-			this.list.add(c.name);
+		    names.add(c.name);
 		}
+	    Collections.sort(names);
+        for(String name : names)
+            this.list.add(name);
 	}
 	
 	@Override

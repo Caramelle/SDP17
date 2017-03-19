@@ -1,9 +1,5 @@
 package vision.rawInput;
 
-import vision.constants.Constants;
-import vision.gui.Preview;
-import vision.gui.SDPConsole;
-
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;

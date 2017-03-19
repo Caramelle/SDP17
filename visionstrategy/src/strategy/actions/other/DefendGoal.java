@@ -2,6 +2,7 @@ package strategy.actions.other;
 
 import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
+import strategy.points.basicPoints.BehindBallPoint;
 import strategy.points.basicPoints.DangerousPoint;
 import strategy.points.basicPoints.MidDangerPoint;
 import strategy.robots.Fred;
@@ -37,7 +38,7 @@ public class DefendGoal extends ActionBase {
             //Attack in case the ball is moving slowly ,far from the goal area, in our own side of the pitch.
             if(midDangerPoint.betterAttack())
             {
-                this.enterAction(new OffensiveKick(this.robot), 0, 0);
+                this.enterAction(new OffensiveKick(this.robot,new BehindBallPoint()), 0, 0);
             }
             else
             {

@@ -8,5 +8,6 @@ public enum RobotAlias {
     FRED,
     JEFFREY,
     VENUS,
-    FELIX
+    FELIX,
+    AVA
 }

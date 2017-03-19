@@ -18,7 +18,7 @@ public class DirectedPoint extends VectorGeometry{
 
 	@Override
 	public String toString(){
-		return "[ " + this.x + " , " + this.y + " ] - " + this.direction;
+		return this.x + " " + this.y + " " + this.direction;
 	}
 
 }

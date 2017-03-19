@@ -10,7 +10,6 @@ import vision.DynamicWorld;
 import vision.Robot;
 import vision.colorAnalysis.SDPColor;
 import vision.constants.Constants;
-import vision.distortion.DistortionListener;
 import vision.robotAnalysis.RobotAnalysisBase;
 import vision.robotAnalysis.RobotPreview;
 import vision.RobotType;

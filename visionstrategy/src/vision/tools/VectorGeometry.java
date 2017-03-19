@@ -27,7 +27,7 @@ public class VectorGeometry {
 
     @Override
     public String toString(){
-        return "X: " + this.x + " Y: " + this.y;
+        return this.x + " " + this.y;
     }
 
     public VectorGeometry copyInto(VectorGeometry v){

@@ -3,6 +3,7 @@ import java.lang.*;
 import strategy.Strategy;
 import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
+import strategy.points.DynamicPoint;
 import strategy.points.basicPoints.BallPoint;
 import strategy.points.basicPoints.BehindBallPoint;
 import strategy.points.basicPoints.EnemyGoal;
@@ -21,10 +22,9 @@ public class OffensiveKick extends ActionBase {
     //public Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
 
 
-    public OffensiveKick(RobotBase robot) {
-        super(robot);
+    public OffensiveKick(RobotBase robot,DynamicPoint point) {
+        super(robot,point);
         this.rawDescription = "OffensiveKick";
-        this.point= new BehindBallPoint();
     }
 
     public boolean cankick (BehindBallPoint behindBall, Robot us){
@@ -48,6 +48,8 @@ public class OffensiveKick extends ActionBase {
 
         this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
         this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+
+
 
 
        /*
@@ -117,15 +119,16 @@ public class OffensiveKick extends ActionBase {
 
 
 
+
+
         System.out.println("exit state 0");
-        this.state = 0;
+        this.state = newState;
     }
 
     @Override
     public void tok() throws ActionException {
 
        //sumits debugger
-
        /* if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
             System.out.println("in tok offensive kick");
             //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
@@ -146,6 +149,8 @@ public class OffensiveKick extends ActionBase {
       }*/
 
         //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
+
+
 
      this.enterState(0);
 
