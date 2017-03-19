@@ -179,7 +179,7 @@ public class GUI extends JFrame implements KeyListener{
                     break;
                 case 'k':
                     this.robot.setControllersActive(true);
-                    this.robot.ACTION_CONTROLLER.setAction(new OffensiveKick(this.robot,new BehindBallPoint()));
+                    this.robot.ACTION_CONTROLLER.setAction(new OffensiveKick(this.robot));
                     break;
                 case 'w':
                     this.robot.setControllersActive(true);

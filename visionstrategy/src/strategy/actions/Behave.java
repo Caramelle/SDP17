@@ -8,7 +8,6 @@ import strategy.actions.other.DefendGoal;
 import strategy.actions.other.GoToSafeLocation;
 import strategy.actions.offense.OffensiveKick;
 import strategy.actions.offense.ShuntKick;
-import strategy.points.basicPoints.BehindBallPoint;
 import strategy.robots.Fred;
 import strategy.robots.RobotBase;
 import vision.Ball;
@@ -64,7 +63,7 @@ public class Behave extends StatefulActionBase<BehaviourEnum> {
                 break;
             case KICK:
                 System.out.println("Choose to kick");
-                this.enterAction(new OffensiveKick(this.robot,new BehindBallPoint()), 0, 0);
+                this.enterAction(new OffensiveKick(this.robot), 0, 0);
                 //May choose to kick if close enough to the ball.
                 break;
             case SHUNT:

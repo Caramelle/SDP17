@@ -3,14 +3,15 @@ import java.lang.*;
 import strategy.Strategy;
 import strategy.actions.ActionException;
 import strategy.actions.ActionBase;
-import strategy.points.DynamicPoint;
 import strategy.points.basicPoints.BallPoint;
+import strategy.points.basicPoints.BallPoint_inArea;
 import strategy.points.basicPoints.BehindBallPoint;
 import strategy.points.basicPoints.EnemyGoal;
 import strategy.robots.Fred;
 import strategy.robots.RobotBase;
 import vision.Robot;
 import vision.RobotType;
+import vision.constants.Constants;
 import vision.tools.VectorGeometry;
 
 /**
@@ -18,13 +19,14 @@ import vision.tools.VectorGeometry;
  */
 public class OffensiveKick extends ActionBase {
 
-   // public BehindBallPoint behindBall = new BehindBallPoint();
+    // public BehindBallPoint behindBall = new BehindBallPoint();
     //public Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
 
 
-    public OffensiveKick(RobotBase robot,DynamicPoint point) {
-        super(robot,point);
+    public OffensiveKick(RobotBase robot) {
+        super(robot);
         this.rawDescription = "OffensiveKick";
+        this.point= new BehindBallPoint();
     }
 
     public boolean cankick (BehindBallPoint behindBall, Robot us){
@@ -33,7 +35,7 @@ public class OffensiveKick extends ActionBase {
             return true;
         }
         else{
-              return false;
+            return false;
         }
 
 
@@ -45,11 +47,35 @@ public class OffensiveKick extends ActionBase {
         Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
         Kicker kicker = new Kicker(this.robot);
 
+        BallPoint ballPoint = new BallPoint();
 
-        this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
-        this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+        if (VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 20) {
+            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+
+            if (us.location.x <= -Constants.PITCH_WIDTH / 4) {
+                this.robot.MOTION_CONTROLLER.setDestination(new BallPoint_inArea());
+                System.out.println("INside area");
+            } else {
+                this.robot.MOTION_CONTROLLER.setDestination(ballPoint);
+                System.out.println("outside area");
+            }
+            kicker.kick(1);
+            System.out.println("kicker.kick");
+
+        } else {
+            kicker.kick(0);
+            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
+            this.robot.MOTION_CONTROLLER.setHeading(behindBall);
+            this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+
+        }
 
 
+
+
+
+        //this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+        //this.robot.MOTION_CONTROLLER.setDestination(behindBall);
 
 
        /*
@@ -58,7 +84,6 @@ public class OffensiveKick extends ActionBase {
             if(this.robot instanceof Fred){
                 //((Fred)this.robot).PROPELLER_CONTROLLER.setActive(true);
                 Kicker kicker = new Kicker(this.robot);
-
                 //kicker.kick(1);
                 System.out.println("entered kick");
                 System.out.println("kicked in offensive kick");
@@ -67,20 +92,17 @@ public class OffensiveKick extends ActionBase {
                 //System.out.println("coordinate: x:" +(new BallPoint()).getX()+" y:"+ (new BallPoint().getY()));
                 System.out.println("coordinate: x:" +behindBall.getX()+" y:"+behindBall.getY());
                 System.out.println("coordinateLocation: x:" +us.location.x+" y:"+us.location.y);
-
                 if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
                     ((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
                     //((Fred)this.robot).PROPELLER_CONTROLLER.propell(-1);
                     System.out.println("counter: " + counter);
                     behindBall.recalculate();
                     kicker.kick(1);
-
                     System.out.println("Close enough to kick and kick 1");
                     counter++;
                 }
                 kicker.kick(0);
                 System.out.println(" kick 0");
-
 //                    try{
 //                        Thread.sleep(50);
 //                    }
@@ -100,21 +122,10 @@ public class OffensiveKick extends ActionBase {
             }
             System.out.println("exit kick ");
         }
-
         */
 
 
 
-
-        if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10){
-
-            kicker.kick(1);
-            System.out.println("kicker.kick");
-        }
-        else {
-            kicker.kick(0);
-            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
-        }
 
 
 
@@ -122,18 +133,17 @@ public class OffensiveKick extends ActionBase {
 
 
         System.out.println("exit state 0");
-        this.state = newState;
+        this.state = 0;
     }
 
     @Override
     public void tok() throws ActionException {
 
-       //sumits debugger
+        //sumits debugger
+
        /* if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
             System.out.println("in tok offensive kick");
             //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
-
-
         }*/
 /*
         System.out.println("in tok offensive kick");
@@ -150,9 +160,7 @@ public class OffensiveKick extends ActionBase {
 
         //((Fred) this.robot).PROPELLER_CONTROLLER.setActive(true);
 
-
-
-     this.enterState(0);
+        this.enterState(0);
 
     }
 }

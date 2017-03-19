@@ -68,7 +68,7 @@ public class Status {
                 } else if (prob == RobotType.FRIEND_2) {
                     chosen = Behaviour.ATTACK;
                 } else {
-                    chosen = Behaviour.DEFEND; //changed to attack
+                    chosen = Behaviour.DEFEND;
                 }
             } else {
                 chosen = Behaviour.ATTACK;
