@@ -21,12 +21,13 @@ public class OffensiveKick extends ActionBase {
 
    // public BehindBallPoint behindBall = new BehindBallPoint();
     //public Robot us = Strategy.world.getRobot(RobotType.FRIEND_2);
-
+   boolean flag;
 
     public OffensiveKick(RobotBase robot) {
         super(robot);
         this.rawDescription = "OffensiveKick";
         this.point= new BehindBallPoint();
+        flag=false;
     }
 
     public boolean cankick (BehindBallPoint behindBall, Robot us){
@@ -49,26 +50,53 @@ public class OffensiveKick extends ActionBase {
 
         BallPoint ballPoint = new BallPoint();
 
-        if (VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 20) {
+        System.out.println("x: " +us.location.x +" y:"+ us.location.y);
+
+        if (us.location.x >= Constants.PITCH_WIDTH / 4) {
             this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
-
-            if (us.location.x <= -Constants.PITCH_WIDTH / 4) {
-                this.robot.MOTION_CONTROLLER.setDestination(new BallPoint_inArea());
-                System.out.println("INside area");
-            } else {
-                this.robot.MOTION_CONTROLLER.setDestination(ballPoint);
-                System.out.println("outside area");
-            }
-            kicker.kick(1);
-            System.out.println("kicker.kick");
-
-        } else {
-            kicker.kick(0);
-            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
-            this.robot.MOTION_CONTROLLER.setHeading(behindBall);
+            this.robot.MOTION_CONTROLLER.setDestination(new BallPoint_inArea());
+            System.out.println("INside area");
+        }
+        else {
+            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
             this.robot.MOTION_CONTROLLER.setDestination(behindBall);
 
         }
+
+
+
+        if(VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10){
+
+            kicker.kick(1);
+            System.out.println("kicker.kick");
+        }
+        else {
+            kicker.kick(0);
+            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt kicker.kick");
+        }
+
+
+
+//        if (VectorGeometry.distance(behindBall.getX(), behindBall.getY(), us.location.x, us.location.y) < 10) {
+//            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+//
+//            if (us.location.x <= -Constants.PITCH_WIDTH / 4) {
+//                this.robot.MOTION_CONTROLLER.setDestination(new BallPoint_inArea());
+//                System.out.println("INside area");
+//            } else {
+//                this.robot.MOTION_CONTROLLER.setDestination(ballPoint);
+//                System.out.println("outside area");
+//            }
+//            kicker.kick(1);
+//            System.out.println("kicker.kick");
+//
+//        } else {
+//            kicker.kick(0);
+//            System.out.println(" NOOOOOOOOOOOOOOOOOOOOOOOt don't kick");
+//            this.robot.MOTION_CONTROLLER.setHeading(EnemyGoal.getEnemyGoalPoint());
+//            this.robot.MOTION_CONTROLLER.setDestination(behindBall);
+//
+//        }
 
 
 

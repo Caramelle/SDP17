@@ -7,7 +7,7 @@ import vision.Robot;
 import vision.RobotType;
 
 /**
- * Created by Simon Rovder
+ * Modified by Dabal
  */
 public class BallPoint_inArea extends DynamicPointBase {
 
@@ -18,7 +18,7 @@ public class BallPoint_inArea extends DynamicPointBase {
     public void recalculate() {
         Ball ball = Strategy.world.getBall();
         if(ball != null){
-            this.x = (int)ball.location.x;
+            this.x = (int)ball.location.x+10;
             this.y = (int)ball.location.y;
         } else {
             RobotType probableHolder = Strategy.world.getProbableBallHolder();
